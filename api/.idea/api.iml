@@ -112,6 +112,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/code-unit" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/classpreloader/classpreloader" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/flipbox/lumen-generator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psy/psysh" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
