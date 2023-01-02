@@ -34,7 +34,7 @@ class CheaterDetection extends Controller
 
                     "footer" => [
                         "text" => "© 2023 (BigBrother) - All Rights Reserved.",
-                        "icon_url" => "https://www.politicalite.com/wp-content/uploads/2022/08/52AE290D-FB00-4CD2-BA2F-C3A6CEAC74EB.jpeg"
+                        "icon_url" => "https://static.wikia.nocookie.net/watchdogscombined/images/8/8b/DedSec_App.png/revision/latest?cb=20161119164213"
                     ],
 
                     "author" => [
@@ -44,10 +44,15 @@ class CheaterDetection extends Controller
 
                     "fields" => [
                         [
-                            "name" => ":eye: Total statistics:",
-                            "value" => ":man_detective: **Total cheater:** 228\n:chart_with_upwards_trend: **Total cheater per day:** 32\n:man_judge: **Last cheater:** [SteamProfile](https://steamcommunity.com/profiles/".$this->GetSteamId64($suspect).")",
+                            "name" => ":office_worker: Cheater info:",
+                            "value" => "<:steamicon:1059590990727499856> **SteamProfile:** [SteamProfile](https://steamcommunity.com/profiles/".$this->GetSteamId64($suspect).")\n<:payday2icon:1059596942688145519> **PD2Profile:** [SteamProfile](https://fbi.paydaythegame.com/suspect/".$this->GetSteamId64($suspect).")",
                             "inline" => false
                         ],
+                        [
+                            "name" => ":eye: Total statistics:",
+                            "value" => ":man_detective: **Total cheater:** 228\n:chart_with_upwards_trend: **Total cheater per day:** 32\n:man_judge: **Last cheater:** From Database :))",
+                            "inline" => false
+                        ]
                     ]
                 ]
             ]
@@ -80,10 +85,9 @@ class CheaterDetection extends Controller
         }
     }
     public function GetSteamId64($id){
-        $url = file_get_contents("https://steamcommunity.com/id/".$id."/?xml=1");
-        $new = simplexml_load_string($url);
-        $buffer = json_encode($new);
-        $buffer = json_decode($buffer, true);
-        return ($buffer['steamID64']);
+    if (str_contains($id, '765')) return $id;
+    $buffer = json_encode(simplexml_load_string(file_get_contents("https://steamcommunity.com/id/".$id."/?xml=1")));
+    $buffer = json_decode($buffer, true);
+    return ($buffer['steamID64']);
     }
 }
