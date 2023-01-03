@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CheaterDetection extends Controller
 {
-        public function SendNotify($suspect, $author)
+        public function SendNotify($suspect, $reason)
     {
         $webhook = "https://discord.com/api/webhooks/1059535015001727136/IuDGqDLbIc_MDNmgfYQblmwqWUZaYA4LG2eoUNIIywJhY5xfQw06Zs8FF4dZXxEnl155";
         $timestamp = date("c", strtotime("now"));
@@ -36,14 +36,14 @@ class CheaterDetection extends Controller
                     ],
 
                     "author" => [
-                        "name" => "Detected by $author",
-                        "url" => "https://steamcommunity.com/profiles/".$this->GetSteamId64($author)
+                        "name" => "Profile on Website",
+                        "url" => "https://example.com"
                     ],
 
                     "fields" => [
                         [
                             "name" => ":office_worker: Cheater info:",
-                            "value" => "<:steamicon:1059590990727499856> **Steam Profile:** [Steam Profile (".$this->GetSteamId64($suspect).")](https://steamcommunity.com/profiles/".$this->GetSteamId64($suspect).")\n<:payday2icon:1059596942688145519> **PD2 Profile:** [Payday2 Profile](https://fbi.paydaythegame.com/suspect/".$this->GetSteamId64($suspect).")\n<:vacban:1059618355142729960> **VAC-BANNED:** ".$this->GetVacStatus($suspect),
+                            "value" => "<:steamicon:1059590990727499856> **Steam Profile:** [Steam Profile (".$this->GetSteamId64($suspect).")](https://steamcommunity.com/profiles/".$this->GetSteamId64($suspect).")\n<:payday2icon:1059596942688145519> **PD2 Profile:** [Payday2 Profile](https://fbi.paydaythegame.com/suspect/".$this->GetSteamId64($suspect).")\n<:vacban:1059618355142729960> **VAC-BANNED:** ".$this->GetVacStatus($suspect)."\n<:question:1059847946960642098> **Detect CODE:** $reason",
                             "inline" => false
                         ],
                         [

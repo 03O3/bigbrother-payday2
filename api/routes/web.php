@@ -5,4 +5,4 @@ $router->get('/', function () {
     return 'Hello World';
 });
 
-$router->get('/webhook/{suspect}/{author}/', 'Brain\CheaterDetection@SendNotify');
+$router->get('/webhook/{suspect}/{reason}', 'Brain\CheaterDetection@SendNotify');
