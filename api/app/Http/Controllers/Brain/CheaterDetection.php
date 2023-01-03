@@ -26,8 +26,6 @@ class CheaterDetection extends Controller
 
                     "description" => "There's one less cheater in payday today!",
 
-                    "url" => "https://cheat-status.su/".$this->GetSteamId64($author),
-
                     "timestamp" => $timestamp,
 
                     "color" => hexdec( "3366ff" ),
@@ -45,7 +43,7 @@ class CheaterDetection extends Controller
                     "fields" => [
                         [
                             "name" => ":office_worker: Cheater info:",
-                            "value" => "<:steamicon:1059590990727499856> **SteamProfile:** [SteamProfile](https://steamcommunity.com/profiles/".$this->GetSteamId64($suspect).")\n<:payday2icon:1059596942688145519> **PD2Profile:** [SteamProfile](https://fbi.paydaythegame.com/suspect/".$this->GetSteamId64($suspect).")",
+                            "value" => "<:steamicon:1059590990727499856> **Steam Profile:** [Steam Profile (".$this->GetSteamId64($suspect).")](https://steamcommunity.com/profiles/".$this->GetSteamId64($suspect).")\n<:payday2icon:1059596942688145519> **PD2 Profile:** [Payday2 Profile](https://fbi.paydaythegame.com/suspect/".$this->GetSteamId64($suspect).")\n<:vacban:1059618355142729960> **VAC-BANNED:** ".$this->GetVacStatus($suspect),
                             "inline" => false
                         ],
                         [
@@ -85,9 +83,16 @@ class CheaterDetection extends Controller
         }
     }
     public function GetSteamId64($id){
-    if (str_contains($id, '765')) return $id;
-    $buffer = json_encode(simplexml_load_string(file_get_contents("https://steamcommunity.com/id/".$id."/?xml=1")));
-    $buffer = json_decode($buffer, true);
-    return ($buffer['steamID64']);
+        if (str_contains($id, '765')) return $id;
+        $buffer = json_encode(simplexml_load_string(file_get_contents("https://steamcommunity.com/id/".$id."/?xml=1")));
+        $buffer = json_decode($buffer, true);
+        return $buffer['steamID64'];
+    }
+
+    public function GetVacStatus($id){
+        $buffer = json_encode(simplexml_load_string(file_get_contents("https://steamcommunity.com/profiles/".$id."/?xml=1")));
+        $buffer = json_decode($buffer, true);
+        if($buffer['vacBanned']) return ":white_check_mark:";
+        return ":x:";
     }
 }
