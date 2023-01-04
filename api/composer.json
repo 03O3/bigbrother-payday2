@@ -9,7 +9,8 @@
         "flipbox/lumen-generator": "^9.1",
         "laravel/lumen-framework": "^9.0",
         "ext-curl": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+      "ext-mysqli": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
