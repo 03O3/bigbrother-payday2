@@ -37,7 +37,7 @@ class CheaterDetection extends Controller
     }
         public function sendNotify($suspect, $reason)
     {
-        $webhook = "https://discord.com/api/webhooks/1059535015001727136/IuDGqDLbIc_MDNmgfYQblmwqWUZaYA4LG2eoUNIIywJhY5xfQw06Zs8FF4dZXxEnl155";
+        $webhook = "";
         $timestamp = date("c", strtotime("now"));
 
         $json_data = json_encode([
