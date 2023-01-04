@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Brain;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CheaterDetection extends Controller
 {
@@ -70,7 +71,7 @@ class CheaterDetection extends Controller
                         ],
                         [
                             "name" => ":eye: Total statistics:",
-                            "value" => ":man_detective: **Total cheater:** ".$this->GetRowCheater()."\n:chart_with_upwards_trend: **Total cheater per day:** 32\n:man_judge: **Last cheater:** [Steam Profile (".$this->GetSteamId64($this->GetLastCheater($suspect)).")](https://steamcommunity.com/profiles/".$this->GetLastCheater($suspect).")",
+                            "value" => ":man_detective: **Total cheater:** ".$this->GetRowCheater()."\n:chart_with_upwards_trend: **Total cheater per day:** ".$this->GetCheaterPerDay()."\n:man_judge: **Last cheater:** [Steam Profile (".$this->GetSteamId64($this->GetLastCheater($suspect)).")](https://steamcommunity.com/profiles/".$this->GetLastCheater($suspect).")",
                             "inline" => false
                         ]
                     ]
@@ -82,7 +83,6 @@ class CheaterDetection extends Controller
         $this->SendWebhook($json_data, $webhook);
 
     }
-
 
     public function SendWebhook($message, $url){
         if(!empty($url))
@@ -105,10 +105,18 @@ class CheaterDetection extends Controller
         }
     }
 
-    public function GetRowCheater(){
-        $results = app('db')->select("SELECT * FROM `cheaters`");
+    public function GetCheaterPerDay(){
+        $today = Carbon::today();
+        $results = app('db')->select("SELECT * FROM `cheaters` WHERE `date` BETWEEN '$today' AND '".$today->endOfDay()."'");
         return count($results);
     }
+
+    public function GetRowCheater(){
+        $results = app('db')->select("SELECT * FROM `cheaters`");
+        if(count($results) == 0) return '1';
+        return count($results);
+    }
+
 
     public function GetLastCheater($id){
         $results = app('db')->select("SELECT * FROM `cheaters` ORDER BY id DESC LIMIT 1");
